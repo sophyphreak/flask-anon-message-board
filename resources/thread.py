@@ -32,7 +32,7 @@ class Thread(Resource):
     def get(self, board_name):
         threads = ThreadModel.find_by_board_name(board_name=board_name)
         threads_jsons = [thread.json() for thread in threads]
-        return [reduce_replies_to_three(thread_json) for thread_json in threads_jsons]
+        return [reduce_three_replies_add_reply_count(thread_json) for thread_json in threads_jsons]
 
     def delete(self, board_name):
         data = Thread.parser.parse_args()
@@ -52,6 +52,7 @@ class Thread(Resource):
         return {"message": "success"}
 
 
-def reduce_replies_to_three(thread_json):
+def reduce_three_replies_add_reply_count(thread_json):
+    thread_json["reply_count"] = len(thread_json["replies"])
     thread_json["replies"] = thread_json["replies"][0:3]
     return thread_json
