@@ -5,7 +5,7 @@ class BoardModel(db.Model):
     __tablename__ = "board"
     _id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
-    threads = db.relationship('ThreadModel')
+    threads = db.relationship("ThreadModel")
 
     def __init__(self, name):
         self.name = name

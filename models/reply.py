@@ -23,7 +23,7 @@ class ReplyModel(db.Model):
             "_id": self._id,
             "text": self.text,
             "created_on": self.created_on.isoformat(),
-            "thread_id": self.thread_id
+            "thread_id": self.thread_id,
         }
 
     @classmethod

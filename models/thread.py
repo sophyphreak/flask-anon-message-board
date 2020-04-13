@@ -11,7 +11,7 @@ class ThreadModel(db.Model):
     bumped_on = db.Column(db.DateTime)
     reported = db.Column(db.Boolean)
     delete_password = db.Column(db.String(80))
-    replies = db.relationship('ReplyModel')
+    replies = db.relationship("ReplyModel")
 
     def __init__(self, board_name, text, delete_password):
         self.board_name = board_name
@@ -28,20 +28,26 @@ class ThreadModel(db.Model):
             "text": self.text,
             "created_on": self.created_on.isoformat(),
             "bumped_on": self.bumped_on.isoformat(),
-            "replies": self.get_replies_list()
+            "replies": self.get_replies_list(),
         }
 
     def get_replies_list(self):
         if self.replies:
-            replies = sorted(self.replies, reverse=True, key=lambda reply: reply.created_on)
+            replies = sorted(
+                self.replies, reverse=True, key=lambda reply: reply.created_on
+            )
             return [reply.json() for reply in replies]
         else:
             return []
 
-
     @classmethod
     def find_by_board_name(cls, board_name):
-        return cls.query.filter_by(board_name=board_name).order_by(ThreadModel.bumped_on.desc()).limit(10).all()
+        return (
+            cls.query.filter_by(board_name=board_name)
+            .order_by(ThreadModel.bumped_on.desc())
+            .limit(10)
+            .all()
+        )
 
     @classmethod
     def find_by_id(cls, _id):
