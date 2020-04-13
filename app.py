@@ -21,8 +21,8 @@ def create_tables():
     db.create_all()
 
 
-api.add_resource(Reply, "/api/replies/<board>")
-api.add_resource(Thread, "/api/threads/<board>")
+api.add_resource(Reply, "/api/replies/<board_name>")
+api.add_resource(Thread, "/api/threads/<board_name>")
 
 if __name__ == "__main__":
     app.run(debug=True)
